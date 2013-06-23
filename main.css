@@ -1,5 +1,8 @@
+svg {
+  border: 1px solid #DEDEDE;
+}
 .node {
-  stroke: #fff;
+  stroke: #ccc;
   stroke-width: 1.5px;
 }
 

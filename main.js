@@ -2,8 +2,8 @@ $(function() {
 
     Graph = function () { this.init.apply(this, arguments); };
     Graph.prototype = {
-        width:    960,
-        height:   500,
+        width:    1200,
+        height:   600,
         charge:   -120,
         distance: 200,
         json: 'test.json',
@@ -44,9 +44,10 @@ $(function() {
             self.node = self.svg.selectAll(".nodes").data(graph.nodes)
                 .enter().append('g').call(self.force.drag);
 
+            var imageSize = graph.nodes.length > 50 ? "20px" : "30px";
             self.image = self.node.append('image').attr('xlink:href', function (d) {
                 return 'http://cdn1.www.st-hatena.com/users/' + d.id.substr(0, 2) + '/' + d.id + '/profile_l.gif';
-            }).attr('width', "30px").attr('height', "30px");
+            }).attr('width', imageSize).attr('height', imageSize);
             self.image.append("title").text(function(d) { return d.id; });
 
             self.text = self.node.append("text").text(function(d) { return d.id; })
