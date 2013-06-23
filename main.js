@@ -44,10 +44,10 @@ $(function() {
             self.node = self.svg.selectAll(".nodes").data(graph.nodes)
                 .enter().append('g').call(self.force.drag);
 
-            self.circle = self.node.append('circle')
-                .attr("class", "node").attr("r", 10)
-                .style("fill", function(d) { return self.color(parseInt(d.id.charCodeAt()%20)); });
-            self.circle.append("title").text(function(d) { return d.id; });
+            self.image = self.node.append('image').attr('xlink:href', function (d) {
+                return 'http://cdn1.www.st-hatena.com/users/' + d.id.substr(0, 2) + '/' + d.id + '/profile_l.gif';
+            }).attr('width', "30px").attr('height', "30px");
+            self.image.append("title").text(function(d) { return d.id; });
 
             self.text = self.node.append("text").text(function(d) { return d.id; })
                 .attr("font-size","0.5em");
@@ -58,8 +58,8 @@ $(function() {
                          .attr("x2", function(d) { return d.target.x; })
                          .attr("y2", function(d) { return d.target.y; });
 
-                self.circle.attr("cx", function(d) { return d.x; })
-                           .attr("cy", function(d) { return d.y; });
+                self.image.attr("x", function(d) { return d.x-15; })
+                          .attr("y", function(d) { return d.y-15; });
 
                 self.text.attr("dx", function(d) { return d.x-15; })
                          .attr("dy", function(d) { return d.y+22; });
@@ -136,8 +136,8 @@ $(function() {
         }
     };
 
-    var graph = new Graph;
-    graph.create();
+    var graph = new Graph({ json: 'json/uscs.json' });
+    graph.createSVG();
     $(document).on('click', '.search-button', function () {
         var id = $('.input-id').val();
         graph.searchById(id);
